@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:pickup_player_app/sign_in_page.dart';
+import 'package:pickup_player_app/new_user_page.dart';
+import 'sign_in_page.dart';
 
 void main() {
   runApp(const PickupPlayer());
@@ -79,7 +80,9 @@ class _OpeningPageState extends State<OpeningPage> {
                 backgroundColor: const Color.fromARGB(255, 255, 255, 255),
               ),
               onPressed: () {
-                debugPrint('Elevated Button');
+                Navigator.push(context, MaterialPageRoute(builder: (context) {
+                  return const NewUserPage();
+                }));
               },
               child: const Text(
                 'New User',

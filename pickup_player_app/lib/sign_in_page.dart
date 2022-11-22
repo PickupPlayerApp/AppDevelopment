@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pickup_player_app/new_user_page.dart';
 
 class SignInPage extends StatefulWidget {
   const SignInPage({super.key});
@@ -116,6 +117,52 @@ class _SignInPageState extends State<SignInPage> {
             ],
           ),
         ),
+        SizedBox(
+          height: 60,
+          child: Stack(
+            children: const [
+              Positioned(
+                bottom: 0,
+                right: 110,
+                child: Text(
+                  'Dont have an account?',
+                  style: TextStyle(
+                    color: Color.fromARGB(255, 61, 96, 238),
+                    fontSize: 17,
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+        SizedBox(
+            height: 60,
+            child: Stack(
+              children: [
+                Positioned(
+                  bottom: 10,
+                  right: 70,
+                  child: OutlinedButton(
+                    style: OutlinedButton.styleFrom(
+                        fixedSize: const Size.fromWidth(250),
+                        backgroundColor:
+                            const Color.fromARGB(255, 255, 255, 255)),
+                    onPressed: () {
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) {
+                        return const NewUserPage();
+                      }));
+                    },
+                    child: const Text(
+                      'Sign Up Here!',
+                      style: TextStyle(
+                        color: Colors.green,
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            )),
       ],
     ));
   }
