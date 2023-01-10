@@ -43,7 +43,7 @@ class _NewUserPageState extends State<NewUserPage> {
                 bottom: 0,
                 right: 165,
                 child: Text(
-                  'Are you a',
+                  'I am a ',
                   style: TextStyle(
                     color: Color.fromARGB(255, 61, 96, 238),
                     fontSize: 20.0,
