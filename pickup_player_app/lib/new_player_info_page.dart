@@ -48,38 +48,41 @@ class _PlayerInfoPageState extends State<PlayerInfoPage> {
     playerModel.playerAgeGroup.add({"id": 6, "label": "13"});
     playerModel.playerAgeGroup.add({"id": 7, "label": "14"});
 
-    playerModel.primaryPosition.add({"id": 1, "label": "Pitcher"});
-    playerModel.primaryPosition.add({"id": 2, "label": "Catcher"});
-    playerModel.primaryPosition.add({"id": 3, "label": "1st Base"});
-    playerModel.primaryPosition.add({"id": 4, "label": "2nd Base"});
-    playerModel.primaryPosition.add({"id": 5, "label": "3rd Base"});
-    playerModel.primaryPosition.add({"id": 6, "label": "Shortstop"});
-    playerModel.primaryPosition.add({"id": 7, "label": "Left Field"});
-    playerModel.primaryPosition.add({"id": 8, "label": "Right Field"});
-    playerModel.primaryPosition.add({"id": 9, "label": "Center Field"});
-    playerModel.primaryPosition.add({"id": 10, "label": "Designated Hitter"});
+    playerModel.primaryPosition.add({"id": 1, "label": "N/A"});
+    playerModel.primaryPosition.add({"id": 2, "label": "Pitcher"});
+    playerModel.primaryPosition.add({"id": 3, "label": "Catcher"});
+    playerModel.primaryPosition.add({"id": 4, "label": "1st Base"});
+    playerModel.primaryPosition.add({"id": 5, "label": "2nd Base"});
+    playerModel.primaryPosition.add({"id": 6, "label": "3rd Base"});
+    playerModel.primaryPosition.add({"id": 7, "label": "Shortstop"});
+    playerModel.primaryPosition.add({"id": 8, "label": "Left Field"});
+    playerModel.primaryPosition.add({"id": 9, "label": "Right Field"});
+    playerModel.primaryPosition.add({"id": 10, "label": "Center Field"});
+    playerModel.primaryPosition.add({"id": 11, "label": "Designated Hitter"});
 
-    playerModel.secondaryPosition.add({"id": 1, "label": "Pitcher"});
-    playerModel.secondaryPosition.add({"id": 2, "label": "Catcher"});
-    playerModel.secondaryPosition.add({"id": 3, "label": "1st Base"});
-    playerModel.secondaryPosition.add({"id": 4, "label": "2nd Base"});
-    playerModel.secondaryPosition.add({"id": 5, "label": "3rd Base"});
-    playerModel.secondaryPosition.add({"id": 6, "label": "Shortstop"});
-    playerModel.secondaryPosition.add({"id": 7, "label": "Left Field"});
-    playerModel.secondaryPosition.add({"id": 8, "label": "Right Field"});
-    playerModel.secondaryPosition.add({"id": 9, "label": "Center Field"});
-    playerModel.secondaryPosition.add({"id": 10, "label": "Designated Hitter"});
+    playerModel.secondaryPosition.add({"id": 1, "label": "N/A"});
+    playerModel.secondaryPosition.add({"id": 2, "label": "Pitcher"});
+    playerModel.secondaryPosition.add({"id": 3, "label": "Catcher"});
+    playerModel.secondaryPosition.add({"id": 4, "label": "1st Base"});
+    playerModel.secondaryPosition.add({"id": 5, "label": "2nd Base"});
+    playerModel.secondaryPosition.add({"id": 6, "label": "3rd Base"});
+    playerModel.secondaryPosition.add({"id": 7, "label": "Shortstop"});
+    playerModel.secondaryPosition.add({"id": 8, "label": "Left Field"});
+    playerModel.secondaryPosition.add({"id": 9, "label": "Right Field"});
+    playerModel.secondaryPosition.add({"id": 10, "label": "Center Field"});
+    playerModel.secondaryPosition.add({"id": 11, "label": "Designated Hitter"});
 
-    playerModel.otherPosition.add({"id": 1, "label": "Pitcher"});
-    playerModel.otherPosition.add({"id": 2, "label": "Catcher"});
-    playerModel.otherPosition.add({"id": 3, "label": "1st Base"});
-    playerModel.otherPosition.add({"id": 4, "label": "2nd Base"});
-    playerModel.otherPosition.add({"id": 5, "label": "3rd Base"});
-    playerModel.otherPosition.add({"id": 6, "label": "Shortstop"});
-    playerModel.otherPosition.add({"id": 7, "label": "Left Field"});
-    playerModel.otherPosition.add({"id": 8, "label": "Right Field"});
-    playerModel.otherPosition.add({"id": 9, "label": "Center Field"});
-    playerModel.otherPosition.add({"id": 10, "label": "Designated Hitter"});
+    playerModel.otherPosition.add({"id": 1, "label": "N/A"});
+    playerModel.otherPosition.add({"id": 2, "label": "Pitcher"});
+    playerModel.otherPosition.add({"id": 3, "label": "Catcher"});
+    playerModel.otherPosition.add({"id": 4, "label": "1st Base"});
+    playerModel.otherPosition.add({"id": 5, "label": "2nd Base"});
+    playerModel.otherPosition.add({"id": 6, "label": "3rd Base"});
+    playerModel.otherPosition.add({"id": 7, "label": "Shortstop"});
+    playerModel.otherPosition.add({"id": 8, "label": "Left Field"});
+    playerModel.otherPosition.add({"id": 9, "label": "Right Field"});
+    playerModel.otherPosition.add({"id": 10, "label": "Center Field"});
+    playerModel.otherPosition.add({"id": 11, "label": "Designated Hitter"});
 
     playerModel.battingSide.add({"id": 1, "label": "Right"});
     playerModel.battingSide.add({"id": 2, "label": "Left"});
@@ -237,6 +240,8 @@ class _PlayerInfoPageState extends State<PlayerInfoPage> {
                   (onValidateVal) {
                     if (onValidateVal.isEmpty) {
                       return "Confirm email can't be empty";
+                    } else if (onValidateVal != playerModel.email) {
+                      return "Emails must match.";
                     }
                     return null;
                   },
@@ -303,6 +308,8 @@ class _PlayerInfoPageState extends State<PlayerInfoPage> {
                   (onValidateVal) {
                     if (onValidateVal.isEmpty) {
                       return "Confirm Password can't be empty";
+                    } else if (onValidateVal != playerModel.password) {
+                      return "Passwords must match.";
                     }
                     return null;
                   },
@@ -474,7 +481,7 @@ class _PlayerInfoPageState extends State<PlayerInfoPage> {
                     optionLabel: "label"),
                 FormHelper.dropDownWidgetWithLabel(
                     context,
-                    "Do You Currently Play for a Select/Travle Team",
+                    "Do You Currently Play for a Select/Travel Team",
                     "",
                     playerModel.currentlyPlayId,
                     playerModel.currentlyPlay, (onChangedVal) {
@@ -598,7 +605,7 @@ class _PlayerInfoPageState extends State<PlayerInfoPage> {
                 FormHelper.inputFieldWidgetWithLabel(
                   context,
                   "zipcode",
-                  "What is You'r ZipCode",
+                  "What is your ZipCode",
                   "",
                   (onValidateVal) {
                     if (onValidateVal.isEmpty) {
@@ -646,9 +653,6 @@ class _PlayerInfoPageState extends State<PlayerInfoPage> {
                   "Add anything to your bio",
                   "",
                   (onValidateVal) {
-                    if (onValidateVal.isEmpty) {
-                      return "Last Name Can't be empty";
-                    }
                     return null;
                   },
                   (onSaveVal) {
