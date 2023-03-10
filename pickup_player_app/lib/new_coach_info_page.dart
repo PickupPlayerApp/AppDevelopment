@@ -380,6 +380,7 @@ class _CoachInfoPageState extends State<CoachInfoPage> {
                 child: Center(
                   child: FormHelper.submitButton("Save", () {
                     if (validateAndSave()) {
+                      // ignore: avoid_print
                       print(coachModel.toJson());
                     }
                   }, btnColor: Colors.green, borderColor: Colors.blue),

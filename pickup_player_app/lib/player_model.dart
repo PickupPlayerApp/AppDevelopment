@@ -57,7 +57,7 @@ class PlayerModel {
     data['LastName'] = lastName;
     data['ParentName'] = parentName;
     data['Email'] = email;
-    data['ConfirmEmail'] = confirmEmail;
+    data['Email'] = confirmEmail;
     data['Username'] = username;
     data['Password'] = password;
     data['ConfirmPassword'] = confirmPassword;
