@@ -1,3 +1,5 @@
+//import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:pickup_player_app/coach_model.dart';
 import 'package:pickup_player_app/sign_in_page.dart';
@@ -14,6 +16,27 @@ class _CoachInfoPageState extends State<CoachInfoPage> {
   GlobalKey<FormState> globalKey = GlobalKey<FormState>();
   CoachModel coachModel = CoachModel();
 
+  final coachFirstNameController = TextEditingController();
+  final coachLastNameController = TextEditingController();
+  final coachTeamNameController = TextEditingController();
+  final coachTeamEmailController = TextEditingController();
+  final coachPasswordController = TextEditingController();
+  final coachTeamLevelController = TextEditingController();
+  final coachTeamLocationController = TextEditingController();
+  final coachWinLoseController = TextEditingController();
+  final coachPracticeLocationController = TextEditingController();
+  final coachPracticeTimeController = TextEditingController();
+  final coachTryoutsLocationController = TextEditingController(); 
+  final coachTryoutDateController = TextEditingController();
+  final coachTryoutTimeController = TextEditingController();
+  final coachTournamentLocationController = TextEditingController();
+  final coachTournamentDateController = TextEditingController();
+  final coachTournamentTimeController = TextEditingController();
+  final coachTournamentPositionController = TextEditingController();
+  
+  late DatabaseReference dbRef;
+  late DatabaseReference tryoutDbRef;
+
   //List<dynamic> position = [];
   //List<dynamic> teamLevel = [];
 
@@ -23,10 +46,12 @@ class _CoachInfoPageState extends State<CoachInfoPage> {
   @override
   void initState() {
     super.initState();
+    dbRef = FirebaseDatabase.instance.ref().child('Coaches');
+    tryoutDbRef = FirebaseDatabase.instance.ref().child('Coaches/tryouts');
 
-    coachModel.teamLevel.add({"id": 1, "label": "AA"});
-    coachModel.teamLevel.add({"id": 2, "label": "AAA"});
-    coachModel.teamLevel.add({"id": 3, "label": "Major"});
+    coachModel.teamLevel.add({"id": "AA", "label": "AA"});
+    coachModel.teamLevel.add({"id": "AAA", "label": "AAA"});
+    coachModel.teamLevel.add({"id": "Major", "label": "Major"});
 
     coachModel.tryoutLocation = List<String>.empty(growable: true);
     coachModel.tryoutLocation!.add("");
@@ -34,17 +59,20 @@ class _CoachInfoPageState extends State<CoachInfoPage> {
     coachModel.tournamentLocation = List<String>.empty(growable: true);
     coachModel.tournamentLocation!.add("");
 
-    coachModel.position.add({"id": 1, "label": "Pitcher"});
-    coachModel.position.add({"id": 2, "label": "Catcher"});
-    coachModel.position.add({"id": 3, "label": "1st Base"});
-    coachModel.position.add({"id": 4, "label": "2nd Base"});
-    coachModel.position.add({"id": 5, "label": "3rd Base"});
-    coachModel.position.add({"id": 6, "label": "Shortstop"});
-    coachModel.position.add({"id": 7, "label": "Left Field"});
-    coachModel.position.add({"id": 8, "label": "Right Field"});
-    coachModel.position.add({"id": 9, "label": "Center Field"});
-    coachModel.position.add({"id": 10, "label": "Designated Hitter"});
+    coachModel.position.add({"id": "Pitcher", "label": "Pitcher"});
+    coachModel.position.add({"id": "Catcher", "label": "Catcher"});
+    coachModel.position.add({"id": "1st Base", "label": "1st Base"});
+    coachModel.position.add({"id": "2nd Base", "label": "2nd Base"});
+    coachModel.position.add({"id": "3rd Base", "label": "3rd Base"});
+    coachModel.position.add({"id": "Shortstop", "label": "Shortstop"});
+    coachModel.position.add({"id": "Left Field", "label": "Left Field"});
+    coachModel.position.add({"id": "Right Field", "label": "Right Field"});
+    coachModel.position.add({"id": "Center Field", "label": "Center Field"});
+    coachModel.position.add({"id": "Designated Hitter", "label": "Designated Hitter"});
   }
+
+  String email = '';
+  String password = '';
 
   @override
   Widget build(BuildContext context) {
@@ -91,9 +119,12 @@ class _CoachInfoPageState extends State<CoachInfoPage> {
                   return null;
                 },
                 (onSaveVal) {
-                  coachModel.firstName = onSaveVal;
+                  
                 },
-                initialValue: coachModel.firstName ?? "",
+                initialValue: "",
+                  onChange: (val) {
+                    setState(() => coachFirstNameController.text = val);
+                  },
                 borderColor: Colors.green,
                 backgroundColor: Colors.lightBlue,
                 fontSize: 14,
@@ -113,9 +144,12 @@ class _CoachInfoPageState extends State<CoachInfoPage> {
                   return null;
                 },
                 (onSaveVal) {
-                  coachModel.lastName = onSaveVal;
+                  
                 },
-                initialValue: coachModel.lastName ?? "",
+                initialValue: "",
+                  onChange: (val) {
+                    setState(() => coachLastNameController.text = val);
+                  },
                 borderColor: Colors.green,
                 backgroundColor: Colors.lightBlue,
                 fontSize: 14,
@@ -135,9 +169,12 @@ class _CoachInfoPageState extends State<CoachInfoPage> {
                   return null;
                 },
                 (onSaveVal) {
-                  coachModel.teamName = onSaveVal;
+                  
                 },
-                initialValue: coachModel.teamName ?? "",
+                initialValue: "",
+                  onChange: (val) {
+                    setState(() => coachTeamNameController.text = val);
+                  },
                 borderColor: Colors.green,
                 backgroundColor: Colors.lightBlue,
                 fontSize: 14,
@@ -157,9 +194,12 @@ class _CoachInfoPageState extends State<CoachInfoPage> {
                   return null;
                 },
                 (onSaveVal) {
-                  coachModel.teamEmail = onSaveVal;
+                  
                 },
-                initialValue: coachModel.teamEmail ?? "",
+                initialValue: "",
+                  onChange: (val) {
+                    setState(() => email = val);
+                  },
                 borderColor: Colors.green,
                 backgroundColor: Colors.lightBlue,
                 fontSize: 14,
@@ -175,13 +215,19 @@ class _CoachInfoPageState extends State<CoachInfoPage> {
                 (onValidateVal) {
                   if (onValidateVal.isEmpty) {
                     return "Confirm Email can't be empty";
-                  }
-                  return null;
+                  }else if (onValidateVal != email) {
+                      return "Emails must match.";
+                    }
+                    return null;
+                  
                 },
                 (onSaveVal) {
                   coachModel.confirmEmail = onSaveVal;
                 },
-                initialValue: coachModel.confirmEmail ?? "",
+                initialValue: "",
+                  onChange: (val) {
+                    setState(() => coachTeamEmailController.text = val);
+                  },
                 borderColor: Colors.green,
                 backgroundColor: Colors.lightBlue,
                 fontSize: 14,
@@ -201,9 +247,12 @@ class _CoachInfoPageState extends State<CoachInfoPage> {
                   return null;
                 },
                 (onSaveVal) {
-                  coachModel.password = onSaveVal;
+                  
                 },
-                initialValue: coachModel.password ?? "",
+                initialValue: "",
+                  onChange: (val) {
+                    setState(() => password = val);
+                  },
                 borderColor: Colors.green,
                 backgroundColor: Colors.lightBlue,
                 fontSize: 14,
@@ -219,13 +268,19 @@ class _CoachInfoPageState extends State<CoachInfoPage> {
                 (onValidateVal) {
                   if (onValidateVal.isEmpty) {
                     return "Confirm Password can't be empty";
-                  }
-                  return null;
+                  }else if (onValidateVal != password) {
+                      return "Emails must match.";
+                    }
+                    return null;
+                  
                 },
                 (onSaveVal) {
-                  coachModel.confirmPassword = onSaveVal;
+                  
                 },
-                initialValue: coachModel.confirmPassword ?? "",
+                initialValue: "",
+                  onChange: (val) {
+                    setState(() => coachPasswordController.text = val);
+                  },
                 borderColor: Colors.green,
                 backgroundColor: Colors.lightBlue,
                 fontSize: 14,
@@ -240,6 +295,7 @@ class _CoachInfoPageState extends State<CoachInfoPage> {
                   coachModel.teamLevelId,
                   coachModel.teamLevel, (onChangedVal) {
                 coachModel.teamLevelId = onChangedVal;
+                coachTeamLevelController.text = onChangedVal;
               }, (onValidateVal) {
                 if (onValidateVal == null) {
                   return 'Please Select Team Level';
@@ -264,9 +320,12 @@ class _CoachInfoPageState extends State<CoachInfoPage> {
                   return null;
                 },
                 (onSaveVal) {
-                  coachModel.teamLocation = onSaveVal;
+                  
                 },
-                initialValue: coachModel.teamLocation ?? "",
+                initialValue: "",
+                  onChange: (val) {
+                    setState(() => coachTeamLocationController.text = val);
+                  },
                 borderColor: Colors.green,
                 backgroundColor: Colors.lightBlue,
                 fontSize: 14,
@@ -286,9 +345,12 @@ class _CoachInfoPageState extends State<CoachInfoPage> {
                   return null;
                 },
                 (onSaveVal) {
-                  coachModel.winLoss = onSaveVal;
+                  
                 },
-                initialValue: coachModel.winLoss ?? "",
+                initialValue: "",
+                  onChange: (val) {
+                    setState(() => coachWinLoseController.text = val);
+                  },
                 borderColor: Colors.green,
                 backgroundColor: Colors.lightBlue,
                 fontSize: 14,
@@ -308,9 +370,12 @@ class _CoachInfoPageState extends State<CoachInfoPage> {
                   return null;
                 },
                 (onSaveVal) {
-                  coachModel.practiceLocation = onSaveVal;
+                  
                 },
-                initialValue: coachModel.practiceLocation ?? "",
+                initialValue: "",
+                  onChange: (val) {
+                    setState(() => coachPracticeLocationController.text = val);
+                  },
                 borderColor: Colors.green,
                 backgroundColor: Colors.lightBlue,
                 fontSize: 14,
@@ -330,9 +395,12 @@ class _CoachInfoPageState extends State<CoachInfoPage> {
                   return null;
                 },
                 (onSaveVal) {
-                  coachModel.practiceTime = onSaveVal;
+                  
                 },
-                initialValue: coachModel.practiceTime ?? "",
+                initialValue: "",
+                  onChange: (val) {
+                    setState(() => coachPracticeTimeController.text = val);
+                  },
                 borderColor: Colors.green,
                 backgroundColor: Colors.lightBlue,
                 fontSize: 14,
@@ -340,8 +408,8 @@ class _CoachInfoPageState extends State<CoachInfoPage> {
                 paddingLeft: 0,
                 paddingRight: 0,
               ),
-              _tryoutContainer(),
-              _tournamentContainer(),
+              //_tryoutContainer(),
+              //_tournamentContainer(),
               const Padding(
                 padding: EdgeInsets.all(10.0),
                 child: Text(
@@ -359,9 +427,6 @@ class _CoachInfoPageState extends State<CoachInfoPage> {
                 "Add anything to your bio",
                 "",
                 (onValidateVal) {
-                  if (onValidateVal.isEmpty) {
-                    return "Last Name Can't be empty";
-                  }
                   return null;
                 },
                 (onSaveVal) {
@@ -380,8 +445,19 @@ class _CoachInfoPageState extends State<CoachInfoPage> {
                 child: Center(
                   child: FormHelper.submitButton("Save", () {
                     if (validateAndSave()) {
-                      // ignore: avoid_print
-                      print(coachModel.toJson());
+                      Map<String, dynamic> coach = {
+                        'first name' : coachFirstNameController.text,
+                        'last name' : coachLastNameController.text,
+                        'team name' : coachTeamNameController.text,
+                        'team email' : coachTeamEmailController.text,
+                        'password' : coachPasswordController.text,
+                        'team level' : coachTeamLevelController.text,
+                        'team location' : coachTeamLocationController.text,
+                        'win lose rate' : coachWinLoseController.text,
+                        'practice location' : coachPracticeLocationController.text,
+                        'practice time' : coachPracticeTimeController.text,
+                      };
+                      dbRef.push().set(coach);
                     }
                   }, btnColor: Colors.green, borderColor: Colors.blue),
                 ),
@@ -422,7 +498,7 @@ class _CoachInfoPageState extends State<CoachInfoPage> {
     );
   }
 
-  Widget _tryoutContainer() {
+  /*Widget _tryoutContainer() {
     return Column(
       //crossAxisAlignment: CrossAxisAlignment.start,
       //mainAxisAlignment: MainAxisAlignment.start,
@@ -470,15 +546,15 @@ class _CoachInfoPageState extends State<CoachInfoPage> {
                 "Location",
                 "",
                 (onValidateVal) {
-                  if (onValidateVal.isEmpty) {
-                    return "Location ${index + 1} Can't be empty";
-                  }
                   return null;
                 },
                 (onSaveVal) {
                   coachModel.tryoutLocation![index] == onSaveVal;
                 },
-                //initialValue: coachModel.tryoutLocation ?? "",
+                initialValue: "",
+                 onChange: (val) {
+                    setState(() => coachTryoutsLocationController.text = val);
+                  },
                 borderColor: Colors.green,
                 backgroundColor: Colors.lightBlue,
                 fontSize: 14,
@@ -494,15 +570,15 @@ class _CoachInfoPageState extends State<CoachInfoPage> {
                 "Date",
                 "",
                 (onValidateVal) {
-                  if (onValidateVal.isEmpty) {
-                    return "Location ${index + 1} Can't be empty";
-                  }
                   return null;
                 },
                 (onSaveVal) {
-                  coachModel.tryoutDate![index] == onSaveVal;
+                  
                 },
-                //initialValue: coachModel.tryoutLocation ?? "",
+                initialValue: "",
+                 onChange: (val) {
+                    setState(() => coachTryoutDateController.text = val);
+                  },
                 borderColor: Colors.green,
                 backgroundColor: Colors.lightBlue,
                 fontSize: 14,
@@ -518,15 +594,15 @@ class _CoachInfoPageState extends State<CoachInfoPage> {
                 "Time",
                 "",
                 (onValidateVal) {
-                  if (onValidateVal.isEmpty) {
-                    return "Location ${index + 1} Can't be empty";
-                  }
                   return null;
                 },
                 (onSaveVal) {
-                  coachModel.tryoutTime![index] == onSaveVal;
+                  
                 },
-                //initialValue: coachModel.tryoutLocation ?? "",
+                initialValue: "",
+                 onChange: (val) {
+                    setState(() => coachTryoutTimeController.text = val);
+                  },
                 borderColor: Colors.green,
                 backgroundColor: Colors.lightBlue,
                 fontSize: 14,
@@ -536,28 +612,37 @@ class _CoachInfoPageState extends State<CoachInfoPage> {
               ),
             ),
             Visibility(
+              visible: index == coachModel.tryoutLocation!.length - 1,
               child: SizedBox(
                 width: 35,
                 child: IconButton(
-                  icon: Icon(Icons.add_circle, color: Colors.green),
-                  onPressed: () {
+                  icon: const Icon(Icons.add_circle, color: Colors.green),
+                  onPressed: () async {
                     addTryoutControl();
+                    await dbRef.update({
+                      'Coaches/tryouts' : {
+                        'tryout' : {
+                        'date' : coachTryoutDateController.text.length + 1,
+                        'location' : coachTryoutsLocationController.text.length + 1,
+                        'time' : coachTryoutTimeController.text.length + 1
+                        }
+                      }
+                    });
                   },
                 ),
               ),
-              visible: index == coachModel.tryoutLocation!.length - 1,
             ),
             Visibility(
+              visible: index > 0,
               child: SizedBox(
                 width: 35,
                 child: IconButton(
-                  icon: Icon(Icons.remove_circle, color: Colors.red),
+                  icon: const Icon(Icons.remove_circle, color: Colors.red),
                   onPressed: () {
                     removeTryoutControl(index);
                   },
                 ),
               ),
-              visible: index > 0,
             ),
           ],
         ));
@@ -567,6 +652,7 @@ class _CoachInfoPageState extends State<CoachInfoPage> {
     setState(() {
       coachModel.tryoutLocation!.add("");
     });
+    
   }
 
   void removeTryoutControl(index) {
@@ -625,15 +711,15 @@ class _CoachInfoPageState extends State<CoachInfoPage> {
                 "Location",
                 "",
                 (onValidateVal) {
-                  if (onValidateVal.isEmpty) {
-                    return "Location ${index + 1} Can't be empty";
-                  }
                   return null;
                 },
                 (onSaveVal) {
-                  coachModel.tournamentLocation![index] == onSaveVal;
+                  
                 },
-                //initialValue: coachModel.tryoutLocation ?? "",
+                initialValue: "",
+                 onChange: (val) {
+                    setState(() => coachTournamentLocationController.text = val);
+                  },
                 borderColor: Colors.green,
                 backgroundColor: Colors.lightBlue,
                 fontSize: 14,
@@ -649,15 +735,15 @@ class _CoachInfoPageState extends State<CoachInfoPage> {
                 "Date",
                 "",
                 (onValidateVal) {
-                  if (onValidateVal.isEmpty) {
-                    return "Location ${index + 1} Can't be empty";
-                  }
                   return null;
                 },
                 (onSaveVal) {
-                  coachModel.tournamentDate![index] == onSaveVal;
+                  
                 },
-                //initialValue: coachModel.tryoutLocation ?? "",
+                initialValue: "",
+                 onChange: (val) {
+                    setState(() => coachTournamentDateController.text = val);
+                  },
                 borderColor: Colors.green,
                 backgroundColor: Colors.lightBlue,
                 fontSize: 14,
@@ -673,15 +759,15 @@ class _CoachInfoPageState extends State<CoachInfoPage> {
                 "Time",
                 "",
                 (onValidateVal) {
-                  if (onValidateVal.isEmpty) {
-                    return "Location ${index + 1} Can't be empty";
-                  }
-                  return null;
+                   return null;
                 },
                 (onSaveVal) {
-                  coachModel.tournamentTime![index] == onSaveVal;
+                  
                 },
-                //initialValue: coachModel.tryoutLocation ?? "",
+                initialValue: "",
+                 onChange: (val) {
+                    setState(() => coachTournamentTimeController.text = val);
+                  },
                 borderColor: Colors.green,
                 backgroundColor: Colors.lightBlue,
                 fontSize: 14,
@@ -691,15 +777,18 @@ class _CoachInfoPageState extends State<CoachInfoPage> {
               ),
             ),
             Flexible(
-              child: FormHelper.dropDownWidgetWithLabel(context, "Position", "",
-                  coachModel.positionId, coachModel.position, (onChangedVal) {
+              child: FormHelper.dropDownWidgetWithLabel(
+                context,
+                  "Position",
+                  "",
+                  coachModel.positionId,
+                  coachModel.position, (onChangedVal) {
                 coachModel.positionId = onChangedVal;
+                coachTournamentPositionController.text = onChangedVal;
               }, (onValidateVal) {
-                if (onValidateVal.isEmplay) {
+                if (onValidateVal == null) {
                   return 'Please Select Team Level';
                 }
-
-                return null;
               },
                   borderColor: Theme.of(context).primaryColor,
                   borderFocusColor: Theme.of(context).primaryColor,
@@ -749,7 +838,7 @@ class _CoachInfoPageState extends State<CoachInfoPage> {
         coachModel.tournamentLocation!.removeAt(index);
       }
     });
-  }
+  }*/
 
   bool validateAndSave() {
     final form = globalKey.currentState;

@@ -1,7 +1,7 @@
-import 'package:firebase_auth/firebase_auth.dart';
+//import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
+//import 'package:flutter/rendering.dart';
 import 'package:pickup_player_app/player_model.dart';
 import 'package:pickup_player_app/sign_in_page.dart';
 import 'package:snippet_coder_utils/FormHelper.dart';
@@ -188,8 +188,7 @@ class _PlayerInfoPageState extends State<PlayerInfoPage> {
                     return null;
                   },
                   (onSaveVal) {
-                    //playerModel.firstName = onSaveVal;
-                    playerFirstNameController;
+                   
                   },
                   initialValue: "",
                   onChange: (val) {
@@ -266,7 +265,7 @@ class _PlayerInfoPageState extends State<PlayerInfoPage> {
                     return null;
                   },
                   (onSaveVal) {
-                    playerModel.email = onSaveVal;
+                    
                   },
                   initialValue: "",
                   onChange: (val) {
@@ -293,8 +292,7 @@ class _PlayerInfoPageState extends State<PlayerInfoPage> {
                     return null;
                   },
                   (onSaveVal) {
-                    playerEmailController;
-                    playerModel.confirmEmail = onSaveVal;
+                    
                   },
                   initialValue: "",
                   onChange: (val) {
@@ -807,7 +805,7 @@ class _PlayerInfoPageState extends State<PlayerInfoPage> {
                         };
 
                         dbRef.push().set(player);
-                        print(playerModel.toJson());
+                        
                       }
                     }, btnColor: Colors.green, borderColor: Colors.blue),
                   ),
