@@ -443,7 +443,7 @@ class _CoachInfoPageState extends State<CoachInfoPage> {
               Padding(
                 padding: const EdgeInsets.all(10.0),
                 child: Center(
-                  child: FormHelper.submitButton("Save", () {
+                  child: FormHelper.submitButton("Sign Up!", () {
                     if (validateAndSave()) {
                       Map<String, dynamic> coach = {
                         'first name' : coachFirstNameController.text,

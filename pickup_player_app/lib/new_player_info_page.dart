@@ -165,7 +165,7 @@ class _PlayerInfoPageState extends State<PlayerInfoPage> {
         key: globalKey,
         child: SingleChildScrollView(
           child: Padding(
-            padding: EdgeInsets.all(10),
+            padding: const EdgeInsets.all(10),
             child: Column(
               children: [
                 const Text(
@@ -779,7 +779,7 @@ class _PlayerInfoPageState extends State<PlayerInfoPage> {
                 Padding(
                   padding: const EdgeInsets.all(10.0),
                   child: Center(
-                    child: FormHelper.submitButton("Save", () {
+                    child: FormHelper.submitButton("Sign Up!", () {
                       if (validateAndSave()) {
                         Map<String, String> player = {
                           'first name': playerFirstNameController.text,
