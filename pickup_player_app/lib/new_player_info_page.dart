@@ -1,4 +1,4 @@
-//import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 //import 'package:flutter/rendering.dart';
@@ -67,7 +67,7 @@ class _PlayerInfoPageState extends State<PlayerInfoPage> {
   @override
   void initState() {
     super.initState();
-    dbRef = FirebaseDatabase.instance.ref().child('Players');
+    dbRef = FirebaseDatabase.instance.ref().child('Users').child('Players');
 
     playerModel.playerAgeGroup.add({"id": "8", "label": "8"});
     playerModel.playerAgeGroup.add({"id": "9", "label": "9"});
@@ -781,7 +781,7 @@ class _PlayerInfoPageState extends State<PlayerInfoPage> {
                   child: Center(
                     child: FormHelper.submitButton("Sign Up!", () {
                       if (validateAndSave()) {
-                        Map<String, String> player = {
+                        Map<String, String> players = {
                           'first name': playerFirstNameController.text,
                           'last name' : playerLastNameController.text,
                           'parent mame' : playerParentNameController.text,
@@ -804,7 +804,8 @@ class _PlayerInfoPageState extends State<PlayerInfoPage> {
                           'zipcode' : playerZipCodeController.text
                         };
 
-                        dbRef.push().set(player);
+                        dbRef.push().set(players);
+                        signUp();
                         
                       }
                     }, btnColor: Colors.green, borderColor: Colors.blue),
@@ -852,6 +853,16 @@ class _PlayerInfoPageState extends State<PlayerInfoPage> {
       return true;
     } else {
       return false;
+    }
+  }
+
+  Future signUp() async{
+    try {
+      await FirebaseAuth.instance.createUserWithEmailAndPassword(
+        email: playerEmailController.text.trim(), 
+        password: playerPasswordController.text.trim());
+    } on FirebaseAuthException catch (e) {
+      print(e);
     }
   }
 }

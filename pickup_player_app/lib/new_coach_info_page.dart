@@ -1,11 +1,18 @@
-//import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:pickup_player_app/coach_model.dart';
+import 'package:pickup_player_app/coach_profile.dart';
 import 'package:pickup_player_app/sign_in_page.dart';
 import 'package:snippet_coder_utils/FormHelper.dart';
 
 class CoachInfoPage extends StatefulWidget {
+  
+
+ 
+
+  
+
   const CoachInfoPage({super.key});
 
   @override
@@ -16,8 +23,8 @@ class _CoachInfoPageState extends State<CoachInfoPage> {
   GlobalKey<FormState> globalKey = GlobalKey<FormState>();
   CoachModel coachModel = CoachModel();
 
-  final coachFirstNameController = TextEditingController();
-  final coachLastNameController = TextEditingController();
+  final coachNameController = TextEditingController();
+  //final coachLastNameController = TextEditingController();
   final coachTeamNameController = TextEditingController();
   final coachTeamEmailController = TextEditingController();
   final coachPasswordController = TextEditingController();
@@ -37,16 +44,18 @@ class _CoachInfoPageState extends State<CoachInfoPage> {
   late DatabaseReference dbRef;
   late DatabaseReference tryoutDbRef;
 
-  //List<dynamic> position = [];
-  //List<dynamic> teamLevel = [];
+  List<dynamic> position = [];
+  List<dynamic> teamLevel = [];
 
-  //String? positionId;
-  //String? teamLevelId;
+  String? positionId;
+  String? teamLevelId;
+  
+ 
 
   @override
   void initState() {
     super.initState();
-    dbRef = FirebaseDatabase.instance.ref().child('Coaches');
+    dbRef = FirebaseDatabase.instance.ref().child('Users').child('Coaches');
     tryoutDbRef = FirebaseDatabase.instance.ref().child('Coaches/tryouts');
 
     coachModel.teamLevel.add({"id": "AA", "label": "AA"});
@@ -109,12 +118,12 @@ class _CoachInfoPageState extends State<CoachInfoPage> {
               ),
               FormHelper.inputFieldWidgetWithLabel(
                 context,
-                "firstname",
-                "First Name",
+                "name",
+                "First and Last name",
                 "",
                 (onValidateVal) {
                   if (onValidateVal.isEmpty) {
-                    return "First Name can't be empty";
+                    return "Name can't be empty";
                   }
                   return null;
                 },
@@ -123,7 +132,8 @@ class _CoachInfoPageState extends State<CoachInfoPage> {
                 },
                 initialValue: "",
                   onChange: (val) {
-                    setState(() => coachFirstNameController.text = val);
+                    setState(() => coachNameController.text = val);
+                    CoachModel.coachName = coachNameController.text;
                   },
                 borderColor: Colors.green,
                 backgroundColor: Colors.lightBlue,
@@ -132,7 +142,7 @@ class _CoachInfoPageState extends State<CoachInfoPage> {
                 paddingLeft: 0,
                 paddingRight: 0,
               ),
-              FormHelper.inputFieldWidgetWithLabel(
+              /*FormHelper.inputFieldWidgetWithLabel(
                 context,
                 "lastname",
                 "Last Name",
@@ -156,7 +166,7 @@ class _CoachInfoPageState extends State<CoachInfoPage> {
                 labelFontSize: 14,
                 paddingLeft: 0,
                 paddingRight: 0,
-              ),
+              ),*/
               FormHelper.inputFieldWidgetWithLabel(
                 context,
                 "teamname",
@@ -174,6 +184,7 @@ class _CoachInfoPageState extends State<CoachInfoPage> {
                 initialValue: "",
                   onChange: (val) {
                     setState(() => coachTeamNameController.text = val);
+                    CoachModel.teamName = coachTeamNameController.text;
                   },
                 borderColor: Colors.green,
                 backgroundColor: Colors.lightBlue,
@@ -227,6 +238,7 @@ class _CoachInfoPageState extends State<CoachInfoPage> {
                 initialValue: "",
                   onChange: (val) {
                     setState(() => coachTeamEmailController.text = val);
+                    CoachModel.teamEmail = coachTeamEmailController.text;
                   },
                 borderColor: Colors.green,
                 backgroundColor: Colors.lightBlue,
@@ -280,6 +292,7 @@ class _CoachInfoPageState extends State<CoachInfoPage> {
                 initialValue: "",
                   onChange: (val) {
                     setState(() => coachPasswordController.text = val);
+                    CoachModel.password = coachPasswordController.text;
                   },
                 borderColor: Colors.green,
                 backgroundColor: Colors.lightBlue,
@@ -292,9 +305,9 @@ class _CoachInfoPageState extends State<CoachInfoPage> {
                   context,
                   "Choose Team Level",
                   "",
-                  coachModel.teamLevelId,
+                  CoachModel.teamLevelId,
                   coachModel.teamLevel, (onChangedVal) {
-                coachModel.teamLevelId = onChangedVal;
+                CoachModel.teamLevelId = onChangedVal;
                 coachTeamLevelController.text = onChangedVal;
               }, (onValidateVal) {
                 if (onValidateVal == null) {
@@ -336,7 +349,7 @@ class _CoachInfoPageState extends State<CoachInfoPage> {
               FormHelper.inputFieldWidgetWithLabel(
                 context,
                 "winlose",
-                "Win/Lose Rate",
+                "Win-Lose Rate e.g. 1-1",
                 "",
                 (onValidateVal) {
                   if (onValidateVal.isEmpty) {
@@ -350,6 +363,8 @@ class _CoachInfoPageState extends State<CoachInfoPage> {
                 initialValue: "",
                   onChange: (val) {
                     setState(() => coachWinLoseController.text = val);
+                    CoachModel.winLoss = coachWinLoseController.text;
+
                   },
                 borderColor: Colors.green,
                 backgroundColor: Colors.lightBlue,
@@ -375,6 +390,7 @@ class _CoachInfoPageState extends State<CoachInfoPage> {
                 initialValue: "",
                   onChange: (val) {
                     setState(() => coachPracticeLocationController.text = val);
+                    CoachModel.practiceLocation = coachPracticeLocationController.text;
                   },
                 borderColor: Colors.green,
                 backgroundColor: Colors.lightBlue,
@@ -400,6 +416,7 @@ class _CoachInfoPageState extends State<CoachInfoPage> {
                 initialValue: "",
                   onChange: (val) {
                     setState(() => coachPracticeTimeController.text = val);
+                    CoachModel.practiceTime = coachPracticeTimeController.text;
                   },
                 borderColor: Colors.green,
                 backgroundColor: Colors.lightBlue,
@@ -443,11 +460,11 @@ class _CoachInfoPageState extends State<CoachInfoPage> {
               Padding(
                 padding: const EdgeInsets.all(10.0),
                 child: Center(
-                  child: FormHelper.submitButton("Sign Up!", () {
+                  child: FormHelper.submitButton("Sign Up!", () async {
                     if (validateAndSave()) {
                       Map<String, dynamic> coach = {
-                        'first name' : coachFirstNameController.text,
-                        'last name' : coachLastNameController.text,
+                        'first name' : coachNameController.text,
+                        //'last name' : coachLastNameController.text,
                         'team name' : coachTeamNameController.text,
                         'team email' : coachTeamEmailController.text,
                         'password' : coachPasswordController.text,
@@ -456,8 +473,14 @@ class _CoachInfoPageState extends State<CoachInfoPage> {
                         'win lose rate' : coachWinLoseController.text,
                         'practice location' : coachPracticeLocationController.text,
                         'practice time' : coachPracticeTimeController.text,
-                      };
+                      }; 
                       dbRef.push().set(coach);
+                      signUp();
+                      
+                      { Navigator.push(context,
+                          MaterialPageRoute(builder: ((context) {
+                        return const CoachProfilePage();
+                      })));}
                     }
                   }, btnColor: Colors.green, borderColor: Colors.blue),
                 ),
@@ -847,6 +870,15 @@ class _CoachInfoPageState extends State<CoachInfoPage> {
       return true;
     } else {
       return false;
+    }
+  }
+  Future signUp() async{
+    try {
+      await FirebaseAuth.instance.createUserWithEmailAndPassword(
+        email: coachTeamEmailController.text.trim(), 
+        password: coachPasswordController.text.trim());
+    } on FirebaseAuthException catch (e) {
+      print(e);
     }
   }
 }

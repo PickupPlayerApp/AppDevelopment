@@ -1,7 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:pickup_player_app/new_user_page.dart';
 import 'package:snippet_coder_utils/FormHelper.dart';
+import 'package:pickup_player_app/profile_page_selector.dart';
 import 'package:pickup_player_app/forgot_password_page.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
+import 'package:pickup_player_app/new_coach_info_page.dart';
+import 'package:pickup_player_app/new_player_info_page.dart';
+
 
 class SignInPage extends StatefulWidget {
   const SignInPage({super.key});
@@ -11,7 +17,19 @@ class SignInPage extends StatefulWidget {
 }
 
 class _SignInPageState extends State<SignInPage> {
-  GlobalKey<FormState> globalKey = GlobalKey<FormState>();
+  final emailController = TextEditingController();
+  final passwordController = TextEditingController();
+  var dbref = FirebaseDatabase.instance.ref().child('Users').child('Coaches').child('team email');
+  
+  get snapshot => null;
+
+  @override
+  void dispose() {
+    emailController.dispose();
+    passwordController.dispose();
+
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -25,18 +43,26 @@ class _SignInPageState extends State<SignInPage> {
           style: TextStyle(color: Color.fromARGB(255, 18, 50, 106)),
         ),
       ),
-      body: _signinpageUIWidget(),
+      body: StreamBuilder<User?>(
+        stream: FirebaseAuth.instance.authStateChanges(),
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            return signinpageUIWidget();
+          } else {
+            return signinpageUIWidget();
+          }
+        },
+        ),
     );
   }
 
-  Widget _signinpageUIWidget(){
+  Widget signinpageUIWidget(){
     return Form(
-      key: globalKey,
       child: SingleChildScrollView(
         child: Padding(
           padding:  const EdgeInsets.all(10),
           child: Column(
-            children: [
+            children:  [
               const Text(
                 'Pickup Player \n App',
                  textAlign: TextAlign.center,
@@ -45,73 +71,32 @@ class _SignInPageState extends State<SignInPage> {
                       fontSize: 30,
                       fontWeight: FontWeight.bold),
               ),
-               FormHelper.inputFieldWidgetWithLabel(
-                  context,
-                  "username",
-                  "     Username",
-                  "",
-                  (onValidateVal) {
-                    if (onValidateVal.isEmpty) {
-                      return "First Name can't be empty";
-                    }
-                    return null;
-                  },
-                  (onSaveVal) {
-                   
-                  },
-                  initialValue: "",
-                  onChange: (val) {
-                    //setState(() => playerFirstNameController.text = val);
-                  },
-                  borderColor: const Color.fromARGB(255, 4, 124, 10),
-                  backgroundColor: const Color.fromARGB(255, 215, 217, 219),
-                  fontSize: 14,
-                  labelFontSize: 20,
-                  labelFontColor: const Color.fromARGB(255, 18, 50, 106),
-                  paddingLeft: 40,
-                  paddingRight: 40,
+              TextField(
+                controller: emailController,
+                cursorColor: Colors.black,
+                textInputAction: TextInputAction.next,
+                decoration: const InputDecoration(labelText: 'Email'),
+               ),
+               TextField(
+                  controller: passwordController,
+                  cursorColor: Colors.black,
+                  textInputAction: TextInputAction.done,
+                  decoration:  const InputDecoration(labelText: 'Password'),
                 ),
-                FormHelper.inputFieldWidgetWithLabel(
-                  context,
-                  "password",
-                  "     Password",
-                  "",
-                  (onValidateVal) {
-                    if (onValidateVal.isEmpty) {
-                      return "First Name can't be empty";
-                    }
-                    return null;
-                  },
-                  (onSaveVal) {
-                   
-                  },
-                  initialValue: "",
-                  onChange: (val) {
-                    //setState(() => playerFirstNameController.text = val);
-                  },
-                  borderColor: const Color.fromARGB(255, 4, 124, 10),
-                  backgroundColor: const Color.fromARGB(255, 215, 217, 219),
-                  fontSize: 14,
-                  labelFontSize: 20,
-                  labelFontColor: const Color.fromARGB(255, 18, 50, 106),
-                  paddingLeft: 40,
-                  paddingRight: 40,
-                ),
-                 Padding(
-                  padding:  const EdgeInsets.fromLTRB( 40, 40, 40, 0),
-                  child: Center( 
-                    child: SizedBox(
-                      width: 300,
-                      child: FormHelper.submitButton("Sign In!",
-                        () {
-                         if (validateAndSave()) {}
-                    },
-                    btnColor: Colors.green, borderColor: Colors.blue,
-                    fontSize: 30
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(50, 30, 50, 0),
+                  child: ElevatedButton.icon(
+                    style: ElevatedButton.styleFrom(
+                      minimumSize: const Size.fromHeight(50),
                     ),
-                    )
-                  ),
+                icon: const Icon (Icons.lock_open, size: 32),
+                label: const Text(
+                  'Sign In',
+                  style: TextStyle(fontSize: 24),
                 ),
+                onPressed: signIn,
+               ),
+                  ),
                 Padding(
                 padding: const EdgeInsets.all(0),
                 child: Center(
@@ -165,14 +150,17 @@ class _SignInPageState extends State<SignInPage> {
       )
     );
   }
+  Future signIn() async {
+    await FirebaseAuth.instance.signInWithEmailAndPassword(
+      email:  emailController.text.trim(),
+      password: passwordController.text.trim(),
+    );
 
-   bool validateAndSave() {
-    final form = globalKey.currentState;
-    if (form!.validate()) {
-      form.save();
-      return true;
-    } else {
-      return false;
-    }
+    // ignore: use_build_context_synchronously
+    Navigator.push(context, 
+      MaterialPageRoute(builder: (context) =>  const ProfilePageSelector()));
+    
   }
+
+  
 }

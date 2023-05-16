@@ -1,17 +1,32 @@
+import 'package:flutter/material.dart';
+import 'package:pickup_player_app/coach_profile.dart';
+import 'package:pickup_player_app/new_coach_info_page.dart';
+
 class CoachModel {
-  String? firstName;
-  String? lastName;
-  String? teamName;
-  String? teamEmail;
-  String? confirmEmail;
-  String? password;
-  String? confirmPassword;
+  // ignore: prefer_typing_uninitialized_variables
+  static var coachName;
+  // ignore: prefer_typing_uninitialized_variables
+  //static var lastName;
+  // ignore: prefer_typing_uninitialized_variables
+  static var teamName;
+  // ignore: prefer_typing_uninitialized_variables
+  static var teamEmail;
+   String? confirmEmail;
+  // ignore: prefer_typing_uninitialized_variables
+  static var password;
+  // ignore: prefer_typing_uninitialized_variables
+  static var confirmPassword;
   List<dynamic> teamLevel = [];
-  String? teamLevelId;
-  String? teamLocation;
-  String? winLoss;
-  String? practiceLocation;
-  String? practiceTime;
+  // ignore: prefer_typing_uninitialized_variables
+  static var teamLevelId;
+  // ignore: prefer_typing_uninitialized_variables
+  static var teamLocation;
+  // ignore: prefer_typing_uninitialized_variables
+  static var winLoss;
+  // ignore: prefer_typing_uninitialized_variables
+  static var practiceLocation;
+  // ignore: prefer_typing_uninitialized_variables
+  static var practiceTime;
   List<String>? tryoutLocation;
   List<String>? tryoutDate;
   List<String>? tryoutTime;
@@ -22,8 +37,10 @@ class CoachModel {
   String? positionId;
   String? coachBio;
 
-  CoachModel(
-      {this.firstName,
+  //var coachFirstName = firstName;
+
+  /*CoachModel(
+      {//this.firstName,
       this.lastName,
       this.teamName,
       this.teamEmail,
@@ -40,13 +57,14 @@ class CoachModel {
       this.tournamentLocation,
       this.tournamentDate,
       this.tournamentTime,
-      this.coachBio});
+      this.coachBio});*/
+
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
 
-    data['FirstName'] = firstName;
-    data['LastName'] = lastName;
+    data['CoachName'] = coachName;
+    //data['LastName'] = lastName;
     data['TeamName'] = teamName;
     data['TeamEmail'] = teamEmail;
     data['ConfirmEmail'] = confirmEmail;
