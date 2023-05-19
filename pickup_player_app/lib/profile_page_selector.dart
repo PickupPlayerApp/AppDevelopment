@@ -35,5 +35,28 @@ class _ProfilePageSelectorState extends State<ProfilePageSelector> {
         )
       ),
     );
+    @override
+    Widget build(BuildContext context) {
+      return Scaffold(backgroundColor: const Color.fromARGB(255, 128, 186, 233),
+        appBar: AppBar(
+          centerTitle: true,
+          backgroundColor: const Color.fromARGB(255, 141, 185, 220),
+          title: const Text(
+            'PickupPlayer \n App',
+            textAlign: TextAlign.center,
+            style: TextStyle(color: Color.fromARGB(255, 18, 50, 106)),
+          ),
+        ),
+        body: Center (
+            child: Column(children: [
+              ElevatedButton(onPressed: (){
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) =>  const PlayerProfilePage()));
+              },
+                  child: const Text("Player"))
+            ],
+            )
+        ),
+      );
   }
 }
