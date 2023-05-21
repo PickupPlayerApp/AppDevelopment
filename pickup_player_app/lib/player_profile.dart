@@ -1,11 +1,8 @@
-
-
 import 'package:flutter/material.dart';
-import 'package:pickup_player_app/coach_model.dart';
+import 'package:pickup_player_app/player_model.dart';
 import 'package:pickup_player_app/sign_in_page.dart';
 import 'package:snippet_coder_utils/FormHelper.dart';
-import 'package:pickup_player_app/coach_model.dart';
-import 'package:pickup_player_app/new_coach_info_page.dart';
+
 
 class PlayerProfilePage extends StatefulWidget {
 
@@ -33,11 +30,11 @@ class _PlayerProfilePageState extends State<PlayerProfilePage> {
             style: TextStyle(color: Color.fromARGB(255, 18, 50, 106)),
           ),
         ),
-        body: SingleChildScrollView (child: coachprofilepageWidget(),)
+        body: SingleChildScrollView (child: playerprofilepageWidget(),)
     );
   }
 
-  Widget coachprofilepageWidget(){
+  Widget playerprofilepageWidget(){
     return(
         Column(
           children:  [
@@ -66,16 +63,15 @@ class _PlayerProfilePageState extends State<PlayerProfilePage> {
               margin: const EdgeInsets.symmetric(vertical: 0.0, horizontal: 25.0),
               child: Row(
                 children:  [
-
                   Padding(
                     padding: const EdgeInsets.fromLTRB(0, 0, 50, 0),
-                    child: Text(playerModel.firstName,
+                    child: Text(PlayerModel.playerName,
                       style: const TextStyle(
                           color: Color.fromARGB(255, 10, 13, 226)
                       ),
                     ),
                   ),
-                  Text(playerModel.email,
+                  Text(PlayerModel.email,
                     style: const TextStyle(
                         color: Color.fromARGB(255, 10, 13, 226)
                     ),
@@ -86,10 +82,41 @@ class _PlayerProfilePageState extends State<PlayerProfilePage> {
             Container(
               color: const Color.fromARGB(255, 11, 83, 190),
               padding: const EdgeInsets.all(10.0),
+              margin: const EdgeInsets.symmetric(vertical: 5.0, horizontal: 25.0),
+              child: Row(
+                children: const [
+                  Text('Dates Available                           ',
+                    style: TextStyle(
+                        color: Color.fromARGB(255, 32, 199, 182)
+                    ),
+                  ),
+                ],
+              ),
+            ),
+             Container(
+              color: const Color.fromARGB(255, 128, 186, 233),
+              padding: const EdgeInsets.all(10.0),
+              margin: const EdgeInsets.symmetric(vertical: 0.0, horizontal: 25.0),
+              child: Row(
+                children:  [
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(0, 0, 50, 0),
+                    child: Text(PlayerModel.datesAvailaible,
+                      style: const TextStyle(
+                          color: Color.fromARGB(255, 10, 13, 226)
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Container(
+              color: const Color.fromARGB(255, 11, 83, 190),
+              padding: const EdgeInsets.all(10.0),
               margin: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 25.0),
               child: Row(
                 children: const [
-                  Text('Category                       ',
+                  Text('Category                                        ',
                     style: TextStyle(
                         color: Color.fromARGB(255, 32, 199, 182)
                     ),
@@ -110,13 +137,13 @@ class _PlayerProfilePageState extends State<PlayerProfilePage> {
                 children:[
                   const Padding(
                     padding: EdgeInsets.fromLTRB(0, 0, 50, 0),
-                    child: Text('Batting Average',
+                    child: Text('Secondary Position         ',
                       style: TextStyle(
                           color: Color.fromARGB(255, 10, 13, 226)
                       ),
                     ),
                   ),
-                  Text(playerModel.battingAverage,
+                  Text(PlayerModel.secondaryPositionId,
                     style: const TextStyle(
                         color: Color.fromARGB(255, 10, 13, 226)
                     ),
@@ -132,13 +159,13 @@ class _PlayerProfilePageState extends State<PlayerProfilePage> {
                 children:[
                   const Padding(
                     padding: EdgeInsets.fromLTRB(0, 0, 50, 0),
-                    child: Text('Past Teams',
+                    child: Text('Other Position                  ',
                       style: TextStyle(
                           color: Color.fromARGB(255, 10, 13, 226)
                       ),
                     ),
                   ),
-                  Text(playerModel.pastTeams,
+                  Text(PlayerModel.otherPositionId,
                     style: const TextStyle(
                         color: Color.fromARGB(255, 10, 13, 226)
                     ),
@@ -154,13 +181,13 @@ class _PlayerProfilePageState extends State<PlayerProfilePage> {
                 children:[
                   const Padding(
                     padding: EdgeInsets.fromLTRB(0, 0, 30, 0),
-                    child: Text('Time Played',
+                    child: Text('Batting Side                            ',
                       style: TextStyle(
                           color: Color.fromARGB(255, 10, 13, 226)
                       ),
                     ),
                   ),
-                  Text(playerModel.howLongPlayed,
+                  Text(PlayerModel.battingSideId,
                     style: const TextStyle(
                         color: Color.fromARGB(255, 10, 13, 226)
                     ),
@@ -176,13 +203,13 @@ class _PlayerProfilePageState extends State<PlayerProfilePage> {
                 children:[
                   const Padding(
                     padding: EdgeInsets.fromLTRB(0, 0, 50, 0),
-                    child: Text('Dates Available',
+                    child: Text('Can You Pitch                   ',
                       style: TextStyle(
                           color: Color.fromARGB(255, 10, 13, 226)
                       ),
                     ),
                   ),
-                  Text(playerModel.datesAvailaible,
+                  Text(PlayerModel.canYouPitchId,
                     style: const TextStyle(
                         color: Color.fromARGB(255, 10, 13, 226)
                     ),
@@ -198,13 +225,13 @@ class _PlayerProfilePageState extends State<PlayerProfilePage> {
                 children:[
                   const Padding(
                     padding: EdgeInsets.fromLTRB(0, 0, 50, 0),
-                    child: Text('Zipcode',
+                    child: Text('Last Age Group                 ',
                       style: TextStyle(
                           color: Color.fromARGB(255, 10, 13, 226)
                       ),
                     ),
                   ),
-                  Text(playerModel.zipCode,
+                  Text(PlayerModel.pastAgeGroupId,
                     style: const TextStyle(
                         color: Color.fromARGB(255, 10, 13, 226)
                     ),
@@ -220,13 +247,13 @@ class _PlayerProfilePageState extends State<PlayerProfilePage> {
                 children:[
                   const Padding(
                     padding: EdgeInsets.fromLTRB(0, 0, 50, 0),
-                    child: Text('Player Bio',
+                    child: Text('Past Teams                       ',
                       style: TextStyle(
                           color: Color.fromARGB(255, 10, 13, 226)
                       ),
                     ),
                   ),
-                  Text(playerModel.playerBio,
+                  Text(PlayerModel.pastTeams,
                     style: const TextStyle(
                         color: Color.fromARGB(255, 10, 13, 226)
                     ),
@@ -234,6 +261,68 @@ class _PlayerProfilePageState extends State<PlayerProfilePage> {
                 ],
               ),
             ),
+            Container(
+              color: const Color.fromARGB(255, 128, 186, 233),
+              padding: const EdgeInsets.all(10.0),
+              margin: const EdgeInsets.symmetric(vertical: 0.0, horizontal: 25.0),
+              child: Row(
+                children:[
+                  const Padding(
+                    padding: EdgeInsets.fromLTRB(0, 0, 50, 0),
+                    child: Text('Career Length                   ',
+                      style: TextStyle(
+                          color: Color.fromARGB(255, 10, 13, 226)
+                      ),
+                    ),
+                  ),
+                  Text(PlayerModel.howLongPlayed,
+                    style: const TextStyle(
+                        color: Color.fromARGB(255, 10, 13, 226)
+                    ),
+                  )
+                ],
+              ),
+            ),
+            Container(
+              color: const Color.fromARGB(255, 128, 186, 233),
+              padding: const EdgeInsets.all(10.0),
+              margin: const EdgeInsets.symmetric(vertical: 0.0, horizontal: 25.0),
+              child: Row(
+                children:[
+                  const Padding(
+                    padding: EdgeInsets.fromLTRB(0, 0, 50, 0),
+                    child: Text('Attend Practice                 ',
+                      style: TextStyle(
+                          color: Color.fromARGB(255, 10, 13, 226)
+                      ),
+                    ),
+                  ),
+                  Text(PlayerModel.attendPracticeId,
+                    style: const TextStyle(
+                        color: Color.fromARGB(255, 10, 13, 226)
+                    ),
+                  )
+                ],
+              ),
+            ),
+            Padding(
+                  padding: const EdgeInsets.fromLTRB(50, 30, 50, 0),
+                  child: ElevatedButton.icon(
+                    style: ElevatedButton.styleFrom(
+                      minimumSize: const Size.fromHeight(50),
+                    ),
+                icon: const Icon (Icons.lock_open, size: 32),
+                label: const Text(
+                  'Log Out ',
+                  style: TextStyle(fontSize: 24),
+                ),
+                onPressed: (){
+                  Navigator.push(context, MaterialPageRoute(builder: (context) {
+                  return const SignInPage();
+                }));
+                }
+               ),
+                  ),
           ],
         )
     );

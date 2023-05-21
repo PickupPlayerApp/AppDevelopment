@@ -11,7 +11,8 @@ class CoachModel {
   static var teamName;
   // ignore: prefer_typing_uninitialized_variables
   static var teamEmail;
-   String? confirmEmail;
+   // ignore: prefer_typing_uninitialized_variables
+   static var confirmEmail;
   // ignore: prefer_typing_uninitialized_variables
   static var password;
   // ignore: prefer_typing_uninitialized_variables

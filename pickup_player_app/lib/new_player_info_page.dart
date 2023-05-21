@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:pickup_player_app/player_model.dart';
 import 'package:pickup_player_app/sign_in_page.dart';
 import 'package:snippet_coder_utils/FormHelper.dart';
+import 'package:pickup_player_app/player_profile.dart';
 
 class PlayerInfoPage extends StatefulWidget {
   const PlayerInfoPage({super.key});
@@ -17,8 +18,8 @@ class _PlayerInfoPageState extends State<PlayerInfoPage> {
   GlobalKey<FormState> globalKey = GlobalKey<FormState>();
   PlayerModel playerModel = PlayerModel();
 
-  final playerFirstNameController = TextEditingController();
-  final playerLastNameController = TextEditingController();
+  final playerNameController = TextEditingController();
+  //final playerLastNameController = TextEditingController();
   final playerParentNameController = TextEditingController();
   final playerEmailController = TextEditingController();
   final playerUserNameController = TextEditingController();
@@ -178,12 +179,12 @@ class _PlayerInfoPageState extends State<PlayerInfoPage> {
                 ),
                 FormHelper.inputFieldWidgetWithLabel(
                   context,
-                  "firstname",
-                  "Player First Name",
+                  "Playername",
+                  "Player Name",
                   "",
                   (onValidateVal) {
                     if (onValidateVal.isEmpty) {
-                      return "First Name can't be empty";
+                      return "Player Name can't be empty";
                     }
                     return null;
                   },
@@ -192,7 +193,8 @@ class _PlayerInfoPageState extends State<PlayerInfoPage> {
                   },
                   initialValue: "",
                   onChange: (val) {
-                    setState(() => playerFirstNameController.text = val);
+                    setState(() => playerNameController.text = val);
+                     PlayerModel.playerName = playerNameController.text;
                   },
                   borderColor: Colors.green,
                   backgroundColor: Colors.lightBlue,
@@ -201,7 +203,7 @@ class _PlayerInfoPageState extends State<PlayerInfoPage> {
                   paddingLeft: 0,
                   paddingRight: 0,
                 ),
-                FormHelper.inputFieldWidgetWithLabel(
+                /*FormHelper.inputFieldWidgetWithLabel(
                   context,
                   "lastname",
                   "Player Last Name",
@@ -226,7 +228,7 @@ class _PlayerInfoPageState extends State<PlayerInfoPage> {
                   labelFontSize: 14,
                   paddingLeft: 0,
                   paddingRight: 0,
-                ),
+                ),*/
                 FormHelper.inputFieldWidgetWithLabel(
                   context,
                   "parentname",
@@ -240,11 +242,12 @@ class _PlayerInfoPageState extends State<PlayerInfoPage> {
                   },
                   (onSaveVal) {
                     playerParentNameController;
-                    playerModel.parentName = onSaveVal;
+                    PlayerModel.parentName = onSaveVal;
                   },
                   initialValue: "",
                   onChange: (val) {
                     setState(() => playerParentNameController.text = val);
+                    PlayerModel.parentName = playerParentNameController.text;
                   },
                   borderColor: Colors.green,
                   backgroundColor: Colors.lightBlue,
@@ -297,6 +300,7 @@ class _PlayerInfoPageState extends State<PlayerInfoPage> {
                   initialValue: "",
                   onChange: (val) {
                     setState(() => playerEmailController.text = val);
+                    PlayerModel.email = playerEmailController.text;
                   },
                   borderColor: Colors.green,
                   backgroundColor: Colors.lightBlue,
@@ -322,6 +326,7 @@ class _PlayerInfoPageState extends State<PlayerInfoPage> {
                   initialValue: "",
                   onChange: (val) {
                     setState(() => playerUserNameController.text = val);
+                    PlayerModel.username = playerUserNameController.text;
                   },
                   borderColor: Colors.green,
                   backgroundColor: Colors.lightBlue,
@@ -374,6 +379,7 @@ class _PlayerInfoPageState extends State<PlayerInfoPage> {
                   initialValue: "",
                   onChange: (val) {
                     setState(() => playerPasswordController.text = val);
+                    PlayerModel.password = playerPasswordController.text;
                   },
                   borderColor: Colors.green,
                   backgroundColor: Colors.lightBlue,
@@ -386,10 +392,10 @@ class _PlayerInfoPageState extends State<PlayerInfoPage> {
                     context,
                     "Player Age Group",
                     "",
-                    playerModel.playerAgeGroupId,
+                    PlayerModel.playerAgeGroupId,
                     playerModel.playerAgeGroup, (onChangedVal) {
-                  playerModel.playerAgeGroupId = onChangedVal;
-                  playerAgeGroupController.text = playerModel.playerAgeGroupId!;
+                  PlayerModel.playerAgeGroupId = onChangedVal;
+                  playerAgeGroupController.text = PlayerModel.playerAgeGroupId!;
                 }, (onValidateVal) {
                   if (onValidateVal == null) {
                     return 'Please select age group';
@@ -406,9 +412,9 @@ class _PlayerInfoPageState extends State<PlayerInfoPage> {
                     context,
                     "Primary Position",
                     "",
-                    playerModel.primaryPositionId,
+                    PlayerModel.primaryPositionId,
                     playerModel.primaryPosition, (onChangedVal) {
-                  playerModel.primaryPositionId = onChangedVal;
+                  PlayerModel.primaryPositionId = onChangedVal;
                   playerPrimaryPositionController.text = onChangedVal;
                 }, (onValidateVal) {
                   if (onValidateVal == null) {
@@ -429,9 +435,9 @@ class _PlayerInfoPageState extends State<PlayerInfoPage> {
                     context,
                     "Secondary Position",
                     "",
-                    playerModel.secondaryPositionId,
+                    PlayerModel.secondaryPositionId,
                     playerModel.secondaryPosition, (onChangedVal) {
-                  playerModel.secondaryPositionId = onChangedVal;
+                  PlayerModel.secondaryPositionId = onChangedVal;
                   playerSecondaryPositionController.text = onChangedVal;
                 }, (onValidateVal) {
                   if (onValidateVal == null) {
@@ -452,9 +458,9 @@ class _PlayerInfoPageState extends State<PlayerInfoPage> {
                     context,
                     "Other Position",
                     "",
-                    playerModel.otherPositionId,
+                    PlayerModel.otherPositionId,
                     playerModel.otherPosition, (onChangedVal) {
-                  playerModel.otherPositionId = onChangedVal;
+                  PlayerModel.otherPositionId = onChangedVal;
                   playerOtherPositionController.text = onChangedVal;
                 }, (onValidateVal) {
                   if (onValidateVal == null) {
@@ -475,9 +481,9 @@ class _PlayerInfoPageState extends State<PlayerInfoPage> {
                     context,
                     "Batting Side",
                     "",
-                    playerModel.battingSideId,
+                    PlayerModel.battingSideId,
                     playerModel.battingSide, (onChangedVal) {
-                  playerModel.battingSideId = onChangedVal;
+                  PlayerModel.battingSideId = onChangedVal;
                   playerBattingSideController.text = onChangedVal;
                 }, (onValidateVal) {
                   if (onValidateVal == null) {
@@ -511,6 +517,7 @@ class _PlayerInfoPageState extends State<PlayerInfoPage> {
                   initialValue: "",
                   onChange: (val) {
                     setState(() => playerBattingAverageController.text = val);
+                    PlayerModel.battingAverage = playerBattingAverageController.text;
                   },
                   borderColor: Colors.green,
                   backgroundColor: Colors.lightBlue,
@@ -523,9 +530,9 @@ class _PlayerInfoPageState extends State<PlayerInfoPage> {
                     context,
                     "Can You Pitch",
                     "",
-                    playerModel.canYouPitchId,
+                    PlayerModel.canYouPitchId,
                     playerModel.canYouPitch, (onChangedVal) {
-                  playerModel.canYouPitchId = onChangedVal;
+                  PlayerModel.canYouPitchId = onChangedVal;
                   playerPitchController.text = onChangedVal;
                 }, (onValidateVal) {
                   if (onValidateVal == null) {
@@ -546,9 +553,9 @@ class _PlayerInfoPageState extends State<PlayerInfoPage> {
                     context,
                     "Last Age Group played For",
                     "",
-                    playerModel.pastAgeGroupId,
+                    PlayerModel.pastAgeGroupId,
                     playerModel.pastAgeGroup, (onChangedVal) {
-                  playerModel.pastAgeGroupId = onChangedVal;
+                  PlayerModel.pastAgeGroupId = onChangedVal;
                   playerLastAgeGroupController.text = onChangedVal;
                 }, (onValidateVal) {
                   if (onValidateVal == null) {
@@ -569,9 +576,9 @@ class _PlayerInfoPageState extends State<PlayerInfoPage> {
                     context,
                     "Do You Currently Play for a Select/Travel Team",
                     "",
-                    playerModel.currentlyPlayId,
+                    PlayerModel.currentlyPlayId,
                     playerModel.currentlyPlay, (onChangedVal) {
-                  playerModel.currentlyPlayId = onChangedVal;
+                  PlayerModel.currentlyPlayId = onChangedVal;
                   playerDoYouPlayController.text = onChangedVal;
                 }, (onValidateVal) {
                   if (onValidateVal == null) {
@@ -605,6 +612,7 @@ class _PlayerInfoPageState extends State<PlayerInfoPage> {
                   initialValue: "",
                   onChange: (val) {
                     setState(() => playerLastTeamController.text = val);
+                    PlayerModel.pastTeams = playerLastTeamController.text;
                   },
                   borderColor: Colors.green,
                   backgroundColor: Colors.lightBlue,
@@ -630,6 +638,7 @@ class _PlayerInfoPageState extends State<PlayerInfoPage> {
                   initialValue: "",
                   onChange: (val) {
                     setState(() => playerHowLongController.text = val);
+                    PlayerModel.howLongPlayed = playerHowLongController.text;
                   },
                   borderColor: Colors.green,
                   backgroundColor: Colors.lightBlue,
@@ -642,9 +651,9 @@ class _PlayerInfoPageState extends State<PlayerInfoPage> {
                     context,
                     "Can You Attend Practices",
                     "",
-                    playerModel.attendPracticeId,
+                    PlayerModel.attendPracticeId,
                     playerModel.attendPractice, (onChangedVal) {
-                  playerModel.attendPracticeId = onChangedVal;
+                  PlayerModel.attendPracticeId = onChangedVal;
                   playerPracticeController.text = onChangedVal;
                 }, (onValidateVal) {
                   if (onValidateVal == null) {
@@ -678,6 +687,7 @@ class _PlayerInfoPageState extends State<PlayerInfoPage> {
                   initialValue: "",
                   onChange: (val) {
                     setState(() => playerDatesAvailaibleController.text = val);
+                    PlayerModel.datesAvailaible = playerDatesAvailaibleController.text;
                   },
                   borderColor: Colors.green,
                   backgroundColor: Colors.lightBlue,
@@ -690,9 +700,9 @@ class _PlayerInfoPageState extends State<PlayerInfoPage> {
                     context,
                     "What Distance Are You Willing to Travel",
                     "",
-                    playerModel.distanceTravelId,
+                    PlayerModel.distanceTravelId,
                     playerModel.distanceTravel, (onChangedVal) {
-                  playerModel.distanceTravelId = onChangedVal;
+                  PlayerModel.distanceTravelId = onChangedVal;
                   playerTravelDistanceController.text = onChangedVal;
                 }, (onValidateVal) {
                   if (onValidateVal == null) {
@@ -726,6 +736,7 @@ class _PlayerInfoPageState extends State<PlayerInfoPage> {
                   initialValue: "",
                   onChange: (val) {
                     setState(() => playerZipCodeController.text = val);
+                    PlayerModel.zipCode = playerZipCodeController.text;
                   },
                   borderColor: Colors.green,
                   backgroundColor: Colors.lightBlue,
@@ -766,9 +777,9 @@ class _PlayerInfoPageState extends State<PlayerInfoPage> {
                     return null;
                   },
                   (onSaveVal) {
-                    playerModel.playerBio = onSaveVal;
+                    PlayerModel.playerBio = onSaveVal;
                   },
-                  initialValue: playerModel.playerBio ?? "",
+                  initialValue: PlayerModel.playerBio ?? "",
                   borderColor: Colors.green,
                   backgroundColor: Colors.lightBlue,
                   fontSize: 14,
@@ -782,8 +793,8 @@ class _PlayerInfoPageState extends State<PlayerInfoPage> {
                     child: FormHelper.submitButton("Sign Up!", () {
                       if (validateAndSave()) {
                         Map<String, String> players = {
-                          'first name': playerFirstNameController.text,
-                          'last name' : playerLastNameController.text,
+                          'first name': playerNameController.text,
+                          //'last name' : playerLastNameController.text,
                           'parent mame' : playerParentNameController.text,
                           'email' : playerEmailController.text,
                           'user name' : playerUserNameController.text,
@@ -806,6 +817,11 @@ class _PlayerInfoPageState extends State<PlayerInfoPage> {
 
                         dbRef.push().set(players);
                         signUp();
+
+                        Navigator.push(context,
+                          MaterialPageRoute(builder: ((context) {
+                        return const PlayerProfilePage();
+                      })));
                         
                       }
                     }, btnColor: Colors.green, borderColor: Colors.blue),

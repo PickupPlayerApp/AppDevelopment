@@ -1,41 +1,41 @@
 class PlayerModel {
-  String? firstName;
-  String? lastName;
-  String? parentName;
-  String? email;
+  static var playerName;
+  static var parentName;
+  static var email;
   String? confirmEmail;
-  String? username;
-  String? password;
+  static var username;
+  static var password;
   String? confirmPassword;
   List<dynamic> playerAgeGroup = [];
-  String? playerAgeGroupId;
+  static var playerAgeGroupId;
   List<dynamic> primaryPosition = [];
-  String? primaryPositionId;
+  static var primaryPositionId;
   List<dynamic> secondaryPosition = [];
-  String? secondaryPositionId;
+  static var secondaryPositionId;
   List<dynamic> otherPosition = [];
-  String? otherPositionId;
+  static var otherPositionId;
   List<dynamic> battingSide = [];
-  String? battingSideId;
-  String? battingAverage;
+  static var battingSideId;
+  static var battingAverage;
   List<dynamic> canYouPitch = [];
-  String? canYouPitchId;
+  static var canYouPitchId;
   List<dynamic> pastAgeGroup = [];
-  String? pastAgeGroupId;
+  static var pastAgeGroupId;
   List<dynamic> currentlyPlay = [];
-  String? currentlyPlayId;
-  String? pastTeams;
-  String? howLongPlayed;
+  // ignore: prefer_typing_uninitialized_variables
+  static var currentlyPlayId;
+  static var pastTeams;
+  static var howLongPlayed;
   List<dynamic> attendPractice = [];
-  String? attendPracticeId;
-  String? datesAvailaible;
+  static var attendPracticeId;
+  static var datesAvailaible;
   List<dynamic> distanceTravel = [];
-  String? distanceTravelId;
-  String? zipCode;
-  String? playerBio;
+  static var distanceTravelId;
+  static var zipCode;
+  static var playerBio;
 
   PlayerModel(
-      {this.firstName,
+     /* {this.firstName,
       this.lastName,
       this.parentName,
       this.email,
@@ -48,13 +48,13 @@ class PlayerModel {
       this.howLongPlayed,
       this.datesAvailaible,
       this.zipCode,
-      this.playerBio});
+      this.playerBio}*/
+      );
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
 
-    data['FirstName'] = firstName;
-    data['LastName'] = lastName;
+    data['PlayerName'] = playerName;
     data['ParentName'] = parentName;
     data['Email'] = email;
     data['Email'] = confirmEmail;

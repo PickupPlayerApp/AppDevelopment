@@ -168,9 +168,28 @@ CoachModel coachModel = CoachModel();
               ],
             ),
           ),
+          Padding(
+                  padding: const EdgeInsets.fromLTRB(50, 30, 50, 0),
+                  child: ElevatedButton.icon(
+                    style: ElevatedButton.styleFrom(
+                      minimumSize: const Size.fromHeight(50),
+                    ),
+                icon: const Icon (Icons.lock_open, size: 32),
+                label: const Text(
+                  'Log Out ',
+                  style: TextStyle(fontSize: 24),
+                ),
+                onPressed: (){
+                  Navigator.push(context, MaterialPageRoute(builder: (context) {
+                  return const SignInPage();
+                }));
+                }
+               ),
+                  ),
         ],
       )
     );
     
   }
+
 }

@@ -7,7 +7,10 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:pickup_player_app/new_coach_info_page.dart';
 import 'package:pickup_player_app/new_player_info_page.dart';
-
+import 'package:pickup_player_app/coach_model.dart';
+import 'package:pickup_player_app/player_model.dart';
+import 'package:pickup_player_app/coach_profile.dart';
+import 'package:pickup_player_app/player_profile.dart';
 
 class SignInPage extends StatefulWidget {
   const SignInPage({super.key});
@@ -151,14 +154,28 @@ class _SignInPageState extends State<SignInPage> {
     );
   }
   Future signIn() async {
-    await FirebaseAuth.instance.signInWithEmailAndPassword(
+    /*await FirebaseAuth.instance.signInWithEmailAndPassword(
       email:  emailController.text.trim(),
       password: passwordController.text.trim(),
-    );
+    );*/
+    if (CoachModel.teamEmail == emailController.text){
+        if (CoachModel.password == passwordController.text){
+          Navigator.push(context, MaterialPageRoute(builder: (context) {
+                  return const CoachProfilePage();
+                }));
+        }
+      }
+    if (PlayerModel.email == emailController.text){
+      if (PlayerModel.password == passwordController.text){
+        Navigator.push(context, MaterialPageRoute(builder: (context) {
+                  return const PlayerProfilePage();
+                }));
+      }
+    }
 
     // ignore: use_build_context_synchronously
-    Navigator.push(context, 
-      MaterialPageRoute(builder: (context) =>  const ProfilePageSelector()));
+    /*Navigator.push(context, 
+      MaterialPageRoute(builder: (context) =>  const ProfilePageSelector()));*/
     
   }
 

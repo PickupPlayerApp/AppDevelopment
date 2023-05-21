@@ -233,7 +233,7 @@ class _CoachInfoPageState extends State<CoachInfoPage> {
                   
                 },
                 (onSaveVal) {
-                  coachModel.confirmEmail = onSaveVal;
+                  CoachModel.confirmEmail = onSaveVal;
                 },
                 initialValue: "",
                   onChange: (val) {
@@ -477,10 +477,10 @@ class _CoachInfoPageState extends State<CoachInfoPage> {
                       dbRef.push().set(coach);
                       signUp();
                       
-                      { Navigator.push(context,
+                       Navigator.push(context,
                           MaterialPageRoute(builder: ((context) {
                         return const CoachProfilePage();
-                      })));}
+                      })));
                     }
                   }, btnColor: Colors.green, borderColor: Colors.blue),
                 ),
